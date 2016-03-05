@@ -21,15 +21,16 @@ def send_message(settings):
     to_number = settings.get('tonumber')
     message = settings.get('message')
   
-    
-    print >> sys.stderr, "INFO Sending SMS via Twilio from number=%s to number=%s with message=%s" % (from_number, to_number,message)
-  
     try:  
         client = TwilioRestClient(account_sid, auth_token)  
   
-        message = client.messages.create(body=message,to=to_number,from_=from_number)  
-  
-        print >> sys.stderr, "INFO Sent Twilio SMS message with sid=%s" % message.sid  
+        numbers_list = to_number.split(",") 
+        
+        for number in numbers_list:  
+            print >> sys.stderr, "INFO Sending SMS via Twilio from number=%s to number=%s with message=%s" % (from_number, number,message)   
+            message = client.messages.create(body=message,to=number,from_=from_number)    
+            print >> sys.stderr, "INFO Sent Twilio SMS message with sid=%s" % message.sid
+          
         return True  
     except Exception as tre:  
         print >> sys.stderr,tre  

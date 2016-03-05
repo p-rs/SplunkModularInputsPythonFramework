@@ -1,0 +1,19 @@
+<setup>
+    <block title="Pubnub Alerts">
+        <text>Configure Pubnub Alerting</text>
+    </block>
+
+    <block title="Publish Settings" endpoint="admin/alert_actions" entity="pubnub">
+        <input field="param.pubkey">
+            <label>Publish Key</label>
+            <type>text</type>
+        </input>
+        <input field="param.subkey">
+            <label>Subscribe Key</label>
+            <type>text</type>
+        </input>
+        
+        
+    </block>
+
+</setup>

@@ -30,6 +30,8 @@ Perform a search in Splunk and then navigate to : Save As -> Alert -> Trigger Ac
 
 On this dialogue you can enter your "from number", "to number" and "SMS message"
 
+"to number" can also be a comma delimited list of numbers
+
 For the SMS message field , token substitution can be used just the same as for email alerts.
 
 http://docs.splunk.com/Documentation/Splunk/latest/Alert/Setupalertactions#Tokens_available_for_email_notifications

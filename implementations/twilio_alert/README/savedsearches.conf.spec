@@ -8,7 +8,7 @@ action.twilio.param.message = <string>
 * (required)
 
 action.twilio.param.tonumber = <string>
-* The to phone number 
+* The to phone number or comma delimited list
 * (required)
 
 action.twilio.param.fromnumber = <string>

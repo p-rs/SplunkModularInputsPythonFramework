@@ -264,6 +264,44 @@ class JSONArrayHandler:
                 print_xml_stream(json.dumps(entry))
         else:
             print_xml_stream(raw_response_output)
+            
+class MyJSONArrayHandler:
+
+    def __init__(self,**args):
+        self.somekey = args['somekey']
+        pass
+
+    def __call__(self, response_object,raw_response_output,response_type,req_args,endpoint):
+        if response_type == "json":
+            output = json.loads(raw_response_output)
+
+            for entry in output['value']:
+                entry['somekey'] = self.somekey
+                print_xml_stream(json.dumps(entry))
+        else:
+            print_xml_stream(raw_response_output)
+
+class YourJSONArrayHandler:
+
+    def __init__(self,**args):
+        pass
+
+    def __call__(self, response_object,raw_response_output,response_type,req_args,endpoint):
+        if response_type == "json":
+            raw_json = json.loads(raw_response_output)
+            column_list = []
+            for column in raw_json['columns']:
+                column_list.append(column['name'])
+            for row in raw_json['rows']:
+                i = 0;
+                new_event = {}
+                for row_item in row:          
+                    new_event[column_list[i]] = row_item
+                    i = i+1
+                print print_xml_stream(json.dumps(new_event))
+
+        else:
+            print_xml_stream(raw_response_output)       
                                       
             
     
