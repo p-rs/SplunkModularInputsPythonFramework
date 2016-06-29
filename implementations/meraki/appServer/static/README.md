@@ -1,4 +1,4 @@
-## Splunk Cisco Meraki Modular Input v0.6
+## Splunk Cisco Meraki Modular Input v0.7
 
 ## Overview
 
@@ -15,8 +15,8 @@ JSON probe events from the Meraki Presence Cloud.
 
 * Untar the release to your $SPLUNK_HOME/etc/apps directory
 * Restart Splunk
-* navigate to Data inputs -> Meraki to setup a new Meraki HTTP server
-* enter the Meraki secret and validator that your Meraki administrator has setup for you
+* Browse to the Meraki App and enter the Meraki Secret and Validator in the setup screen.
+* navigate to Data inputs -> Meraki to setup a new Meraki HTTP server to listen for event data
 
 
 ## Logging

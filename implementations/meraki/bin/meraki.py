@@ -11,6 +11,7 @@ import xml.dom.minidom, xml.sax.saxutils
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import SocketServer
 import urllib 
+import splunk.entity as entity
 
 #set up logging
 logging.root
@@ -47,18 +48,7 @@ SCHEME = """<scheme>
                 <required_on_edit>false</required_on_edit>
                 <required_on_create>false</required_on_create>
             </arg>
-            <arg name="meraki_secret">
-                <title>Meraki Client Secret</title>
-                <description>Meraki Client Secret</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>true</required_on_create>
-            </arg>
-            <arg name="meraki_validator">
-                <title>Meraki Client Validator</title>
-                <description>Meraki Client Validator</description>
-                <required_on_edit>false</required_on_edit>
-                <required_on_create>true</required_on_create>
-            </arg>
+            
             <arg name="api_version">
                 <title>CMX API Version</title>
                 <description>CMX API Version</description>
@@ -70,6 +60,22 @@ SCHEME = """<scheme>
     </endpoint>
 </scheme>
 """
+
+def get_credentials(session_key):
+   myapp = 'meraki_ta'
+   try:
+      # list all credentials
+      entities = entity.getEntities(['admin', 'passwords'], namespace=myapp,
+                                    owner='nobody', sessionKey=session_key)
+   except Exception, e:
+      raise Exception("Could not get Meraki %s credentials from splunk. Error: %s"
+                      % (myapp, str(e)))
+
+   # return first set of credentials
+   for i, c in entities.items():
+        return c['username'], c['clear_password']
+
+   raise Exception("No Meraki secret or validator have been found, have you setup the App yet ?")
 
 def do_validate():
     config = get_validation_config() 
@@ -85,9 +91,11 @@ def do_run():
     
     http_port=config.get("http_port",80)
     http_bind_address=config.get("http_bind_address",'')
-    meraki_validator=config.get("meraki_validator")
-    meraki_secret=config.get("meraki_secret")
     api_version=config.get("api_version","1.0")
+
+    session_key = config.get("session_key")   
+    meraki_validator, meraki_secret = get_credentials(session_key)
+    
     
     try :
         server_address = (http_bind_address, int(http_port))
@@ -190,6 +198,12 @@ def get_input_config():
         # parse the config XML
         doc = xml.dom.minidom.parseString(config_str)
         root = doc.documentElement
+
+        session_key_node = root.getElementsByTagName("session_key")[0]
+        if session_key_node and session_key_node.firstChild and session_key_node.firstChild.nodeType == session_key_node.firstChild.TEXT_NODE:
+            data = session_key_node.firstChild.data
+            config["session_key"] = data 
+
         conf_node = root.getElementsByTagName("configuration")[0]
         if conf_node:
             logging.debug("XML: found configuration")

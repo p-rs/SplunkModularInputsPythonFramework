@@ -1,0 +1,22 @@
+<setup>
+
+
+<block title="Meraki setup for secure settings" endpoint="storage/passwords" entity="_new">
+
+
+
+  <input field="name">
+    <label>Meraki Validator</label>
+    <type>text</type>
+  </input>
+
+  <input field="password">
+    <label>Meraki Secret</label>
+    <type>password</type>
+  </input>
+
+</block>
+
+   
+
+</setup>

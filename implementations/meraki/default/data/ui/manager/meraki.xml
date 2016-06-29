@@ -30,20 +30,7 @@
           <view name="list"/>
           <key name="exampleText">Host address to bind to for this HTTP server</key>
         </element>
-        <element name="meraki_secret" type="textfield" label="Meraki Client Secret">
-          
-          <view name="edit"/>
-          <view name="create"/>
-          <view name="list"/>
-          <key name="exampleText">Meraki Client Secret</key>
-        </element>
-         <element name="meraki_validator" type="textfield" label="Meraki Client Validator">
-          
-          <view name="edit"/>
-          <view name="create"/>
-          <view name="list"/>
-          <key name="exampleText">Meraki Client Validator</key>
-        </element>
+        
         <element name="api_version" type="select" label="CMX API Version">
           
           <view name="edit"/>
