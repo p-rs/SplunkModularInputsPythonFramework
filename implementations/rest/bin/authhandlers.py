@@ -7,6 +7,20 @@ import urllib
 
 #add your custom auth handler class to this module
 
+class MyEncryptedCredentialsAuthHAndler(AuthBase):
+    def __init__(self,**args):
+        # setup any auth-related data here
+        #self.username = args['username']
+        #self.password = args['password']
+        pass
+        
+    def __call__(self, r):
+        # modify and return the request
+        #r.headers['foouser'] = self.username
+        #r.headers['foopass'] = self.password
+        return r
+  
+  
 #template
 class MyCustomAuth(AuthBase):
     def __init__(self,**args):
@@ -20,7 +34,27 @@ class MyCustomAuth(AuthBase):
         #r.headers['foouser'] = self.username
         #r.headers['foopass'] = self.password
         return r
-    
+  
+class MyCustomOpsViewAuth(AuthBase):
+     def __init__(self,**args):
+         self.username = args['username']
+         self.password = args['password']
+         self.url = args['url']
+         pass
+ 
+     def __call__(self, r):
+         
+         #issue a PUT request (not a get) to the url from self.url
+         payload = {'username': self.username,'password':self.password}
+         auth_response = requests.put(self.url,params=payload,verify=false)
+         #get the auth token from the auth_response. 
+         #I have no idea where this is in your response,look in your documentation ??
+         tokenstring = "mytoken"
+         headers = {'X-Opsview-Username': self.username,'X-Opsview-Token':tokenstring}
+         
+         r.headers = headers
+         return r
+       
 
 class MyUnifyAuth(AuthBase):
      def __init__(self,**args):

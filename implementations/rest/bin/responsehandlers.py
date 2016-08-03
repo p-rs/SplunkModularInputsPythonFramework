@@ -1,6 +1,7 @@
 #add your custom response handler class to this module
 import json
 import datetime
+from datetime import datetime,timedelta
 
 #the default handler , does nothing , just passes the raw output directly to STDOUT
 class DefaultResponseHandler:
@@ -250,7 +251,36 @@ class OpenstackTelemetryHandler:
         else:
             print_xml_stream(raw_response_output)
 
+class SmartTabHandler:
 
+    def __init__(self,**args):
+        pass
+
+    def __call__(self, response_object,raw_response_output,response_type,req_args,endpoint):
+        if response_type == "json":
+            output = json.loads(raw_response_output)
+
+            #split out JSON array elements into individual events
+            for entry in output:
+                print_xml_stream(json.dumps(entry))
+            
+            if not "params" in req_args:
+                req_args["params"] = {}
+            
+            #increment the date parameters by 1 day. These will get automagically persisted
+            #back to inputs.conf for you
+            req_args["params"]["dateStart"] = increment_one_day(req_args["params"]["dateStart"])
+            req_args["params"]["dateEnd"] = increment_one_day(req_args["params"]["dateEnd"])
+            
+        else:
+            print_xml_stream(raw_response_output)
+            
+    def _increment_one_day(self,date_str):
+
+        date = datetime.strptime(date_str,'%Y-%m-%d')
+        date += timedelta(days=1)
+        return datetime.strftime(date,'%Y-%m-%d')
+            
 class JSONArrayHandler:
 
     def __init__(self,**args):

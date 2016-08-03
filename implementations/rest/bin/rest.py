@@ -291,7 +291,23 @@ def do_validate():
     config = get_validation_config() 
     #TODO
     #if error , print_validation_error & sys.exit(2) 
-    
+
+def get_credentials(session_key):
+   myapp = 'rest_ta'
+   try:
+      # list all credentials
+      entities = entity.getEntities(['admin', 'passwords'], namespace=myapp,
+                                    owner='nobody', sessionKey=session_key)
+   except Exception, e:
+      raise Exception("Could not get credentials from splunk. Error: %s"
+                      % (myapp, str(e)))
+
+   # return first set of credentials
+   for i, c in entities.items():
+        return c['username'], c['clear_password']
+
+   raise Exception("No credentials have been found, have you setup the App yet ?")   
+
 def do_run(config,endpoint_list):
     
     #setup some globals
@@ -303,6 +319,8 @@ def do_run(config,endpoint_list):
     SPLUNK_PORT = server_uri[18:]
     STANZA = config.get("name")
     SESSION_TOKEN = config.get("session_key")
+    
+    # encrypted_username, encrypted_password = get_credentials(SESSION_TOKEN)
    
     #params
     
