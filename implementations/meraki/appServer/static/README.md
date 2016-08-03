@@ -27,6 +27,7 @@ JSON probe events from the Meraki Presence Cloud.
 ## Logging
 
 Any log entries/errors will get written to $SPLUNK_HOME/var/log/splunk/splunkd.log
+
 Any errors are searchable :  index=_internal error ExecProcessor meraki.py
 
 ## Troubleshooting
