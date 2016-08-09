@@ -75,7 +75,8 @@ You can see which MIBs are available by looking in SPLUNK_HOME/etc/apps/snmp_ta/
 
 Any additional custom MIBs need to be converted into Python Modules.
 
-You can simply do this by using the build-pysnmp-mib tool that is part of the pysnmp installation
+You can simply do this by using the build-pysnmp-mib tool that is part of the pysnmp installation. Note ,that you will need to install pysnmp version 4.2.5 in order to get the utility tools , as the latest releases of pysnmp  no longer contain these tools.
+https://pypi.python.org/pypi/pysnmp/4.2.5
 
 build-pysnmp-mib -o SOME-CUSTOM-MIB.py SOME-CUSTOM-MIB.mib
 
