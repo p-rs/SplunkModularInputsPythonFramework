@@ -1,5 +1,5 @@
 # Splunk Command Modular Input v1.2
-by Damien Dallimore
+by www.baboonbones.com
 May 2018
 ----
 

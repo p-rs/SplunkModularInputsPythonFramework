@@ -93,12 +93,4 @@ Any log entries/errors will get written to $SPLUNK_HOME/var/log/splunk/splunkd.l
 
 ## Contact
 
-This project was initiated by Damien Dallimore
-<table>
-
-<tr>
-<td><em>Email</em></td>
-<td>damien@baboonbones.com</td>
-</tr>
-
-</table>
+www.baboonbones.com
