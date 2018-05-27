@@ -1,12 +1,4 @@
-'''
-Modular Input Script
-
-Copyright (C) 2012 Splunk, Inc.
-All Rights Reserved
-
-'''
-
-import sys,logging,os,time,re,threading
+import sys,logging,os,time,re,threading,hashlib
 import xml.dom.minidom
 import tokens
 from datetime import datetime
@@ -59,7 +51,12 @@ SCHEME = """<scheme>
                 <title>REST input name</title>
                 <description>Name of this REST input</description>
             </arg>
-                   
+            <arg name="activation_key">
+                <title>Activation Key</title>
+                <description>Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key</description>
+                <required_on_edit>true</required_on_edit>
+                <required_on_create>true</required_on_create>
+            </arg>     
             <arg name="endpoint">
                 <title>Endpoint URL</title>
                 <description>URL to send the HTTP GET request to</description>
@@ -310,6 +307,15 @@ def get_credentials(session_key):
 
 def do_run(config,endpoint_list):
     
+    activation_key = config.get("activation_key")
+    app_name = "REST API Modular Input"
+    
+    m = hashlib.md5()
+    m.update((app_name))
+    if not m.hexdigest().upper() == activation_key.upper():
+        logging.error("FATAL Activation key for App '%s' failed" % app_name)
+        sys.exit(2)
+        
     #setup some globals
     server_uri = config.get("server_uri")
     global SPLUNK_PORT
@@ -520,6 +526,8 @@ def do_run(config,endpoint_list):
                             r = requests.post(endpoint,**req_args) 
                         elif http_method == "PUT":
                             r = requests.put(endpoint,**req_args) 
+                        elif http_method == "HEAD":
+                            r = requests.head(endpoint,**req_args)
                         
                 except requests.exceptions.Timeout,e:
                     logging.error("HTTP Request Timeout error: %s" % str(e))

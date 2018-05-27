@@ -1,4 +1,4 @@
-import sys,os
+import sys,os,hashlib
 import json
 import shutil
   
@@ -8,6 +8,15 @@ def send_file(file,settings):
     
     directory = settings.get('directory')
     filename = settings.get('filename')
+    
+    activation_key = settings.get('activationkey')
+    app_name = "Scheduled Export of Indexed Data (SEND) to File"
+    
+    m = hashlib.md5()
+    m.update((app_name))
+    if not m.hexdigest().upper() == activation_key.upper():
+        print >> sys.stderr, ("FATAL Activation key for App '%s' failed" % app_name)
+        sys.exit(2)
     
     try:  
         

@@ -9,7 +9,17 @@ class DefaultCommandOutputHandler:
     def __call__(self, raw_cmd_output):        
         print_xml_stream(raw_cmd_output)
           
+
+class GoGenHandler:
+    
+    def __init__(self,**args):
+        self.index = args['index']
+        self.source = args['source']
+        self.sourcetype = args['sourcetype']
+        self.host = args['host']
         
+    def __call__(self,raw_cmd_output):        
+        print "<stream><event><data>%s</data><source>%s</source><sourcetype>%s</sourcetype><index>%s</index><host>%s</host></event></stream>" % (encodeXMLText(raw_cmd_output),self.source,self.sourcetype,self.index,self.host)       
         
 class MyCommandOutputHandler:
     

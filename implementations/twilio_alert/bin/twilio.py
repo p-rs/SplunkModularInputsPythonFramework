@@ -1,4 +1,4 @@
-import sys,os
+import sys,os,hashlib
 import json
   
 
@@ -20,6 +20,15 @@ def send_message(settings):
     from_number = settings.get('fromnumber')
     to_number = settings.get('tonumber')
     message = settings.get('message')
+    
+    activation_key = settings.get('activationkey')
+    app_name = "Twilio SMS Alerting"
+    
+    m = hashlib.md5()
+    m.update((app_name))
+    if not m.hexdigest().upper() == activation_key.upper():
+        print >> sys.stderr, ("FATAL Activation key for App '%s' failed" % app_name)
+        sys.exit(2)
   
     try:  
         client = TwilioRestClient(account_sid, auth_token)  

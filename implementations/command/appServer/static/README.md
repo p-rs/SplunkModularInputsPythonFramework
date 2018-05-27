@@ -1,6 +1,6 @@
-# Splunk Command Modular Input v1.1
+# Splunk Command Modular Input v1.2
 by Damien Dallimore
-November 2013
+May 2018
 ----
 
 ## Overview
@@ -17,6 +17,10 @@ It is quite simply just a wrapper around whatever system commands/programs that 
 
 * Untar the release to your $SPLUNK_HOME/etc/apps directory
 * Restart Splunk
+
+## Activation Key
+
+You require an activation key to use this App. Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key
 
 ## Custom Output Handlers
 

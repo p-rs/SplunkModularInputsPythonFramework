@@ -1,12 +1,4 @@
-'''
-Tesla Modular Input Script
-
-Copyright (C) 2012 Splunk, Inc.
-All Rights Reserved
-
-'''
-
-import sys, logging, os, time, re,json
+import sys, logging, os, time, re,json,hashlib
 import xml.dom.minidom
 
 SPLUNK_HOME = os.environ.get("SPLUNK_HOME")
@@ -51,6 +43,12 @@ SCHEME = """<scheme>
                 <title>Tesla input name</title>
                 <description>Name of this Tesla input</description>
             </arg> 
+            <arg name="activation_key">
+                <title>Activation Key</title>
+                <description>Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key</description>
+                <required_on_edit>true</required_on_edit>
+                <required_on_create>true</required_on_create>
+            </arg>
             <arg name="vehicle_id">
                 <title>Tesla Vehicle ID</title>
                 <description>Tesla Vehicle ID</description>
@@ -166,6 +164,15 @@ def do_validate():
 def do_run():
     
     config = get_input_config() 
+    
+    activation_key = config.get("activation_key")
+    app_name = "Command Modular Input"
+    
+    m = hashlib.md5()
+    m.update((app_name))
+    if not m.hexdigest().upper() == activation_key.upper():
+        logging.error("FATAL Activation key for App '%s' failed" % app_name)
+        sys.exit(2)
     
     #setup some globals
     server_uri = config.get("server_uri")

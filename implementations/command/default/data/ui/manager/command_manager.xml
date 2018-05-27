@@ -15,6 +15,12 @@
           <view name="create"/>
           <key name="exampleText">Name of this command input</key>
         </element>
+        <element name="activation_key" label="Activation Key">
+          <view name="list"/>
+          <view name="create"/>
+          <view name="edit"/>
+          <key name="exampleText">Visit &lt;a href="http://www.baboonbones.com/#activation" target="_blank"&gt;http://www.baboonbones.com/#activation&lt;/a&gt; to obtain a free,non-expiring key</key>
+        </element>
         
         <element name="command_name" type="textfield" label="Command Name">
           <view name="list"/>

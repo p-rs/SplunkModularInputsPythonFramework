@@ -1,4 +1,4 @@
-## Splunk Cisco Meraki Modular Input v0.7
+## Splunk Cisco Meraki Modular Input v0.8
 
 ## Overview
 
@@ -22,6 +22,10 @@ JSON probe events from the Meraki Presence Cloud.
 2. Choose your Meraki API version
 3. Setup sourcetype/index etc….
 4. Then on the Meraki side of things you will configure to send events to the HTTP POST URL , and specify the port in the URL also :  http://yoursplunkhost:yourport/events
+
+## Activation Key
+
+You require an activation key to use this App. Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key
 
 
 ## Logging

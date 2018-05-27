@@ -1,4 +1,4 @@
-import sys,os
+import sys,os,hashlib
 import json
 
 SPLUNK_HOME = os.environ.get("SPLUNK_HOME")
@@ -23,6 +23,15 @@ def send_message(settings):
     channel = settings.get('channel')
     message = settings.get('message')
   
+    activation_key = settings.get('activationkey')
+    app_name = "Pubnub Modular Alert"
+    
+    m = hashlib.md5()
+    m.update((app_name))
+    if not m.hexdigest().upper() == activation_key.upper():
+        print >> sys.stderr, ("FATAL Activation key for App '%s' failed" % app_name)
+        sys.exit(2)
+        
     
     print >> sys.stderr, "INFO Sending message to Pubnub channel=%s with message=%s" % (channel,message)
   

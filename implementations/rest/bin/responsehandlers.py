@@ -23,6 +23,19 @@ class MyResponseHandler:
         
     def __call__(self, response_object,raw_response_output,response_type,req_args,endpoint):        
         print_xml_stream("foobar")
+        
+
+class RollOutCSVHandler:
+    
+    def __init__(self,**args):
+        pass
+        
+    def __call__(self, response_object,raw_response_output,response_type,req_args,endpoint): 
+        import csv,io
+        reader_list = csv.DictReader(io.StringIO(raw_response_output))
+        for row in reader_list:      
+            print_xml_stream(row)
+        
 
 '''various example handlers follow'''
         
@@ -55,7 +68,21 @@ class QualysGuardActivityLog:
         date_from = (datetime.datetime.now() - datetime.timedelta(minutes=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
         req_args["params"]["date_from"] = date_from
         print_xml_stream(raw_response_output) 
-                          
+
+class ZipFileResponseHandler:
+
+    def __init__(self,**args):
+        self.csv_file_to_index = args['csv_file_to_index']
+
+    def __call__(self, response_object,raw_response_output,response_type,req_args,endpoint):
+        import zipfile,io,re
+        file = zipfile.ZipFile(BytesIO(response_object.content))
+        for info in file.infolist():
+            if re.match(self.csv_file_to_index, info.filename):
+                filecontent = file.read(info)
+                print_xml_stream(filecontent)
+      
+
 class FourSquareCheckinsEventHandler:
     
     def __init__(self,**args):
@@ -128,6 +155,37 @@ class BugsenseErrorsEventHandler:
             
             for error in output["data"]:
                 print_xml_stream(json.dumps(error))   
+        else:
+            print_xml_stream(raw_response_output)$$
+
+class CallIdentifierHandler:
+    
+    def __init__(self,**args):
+        pass
+        
+    def __call__(self, response_object,raw_response_output,response_type,req_args,endpoint):
+        if response_type == "json":        
+            output = json.loads(raw_response_output)
+            
+            for call in output["plcmCallList"]:
+                del call["atomLinkList"]
+                del call["destinationDetails"]
+                del call["originatorDetails"]
+                print_xml_stream(json.dumps(call))   
+        else:
+            print_xml_stream(raw_response_output)
+
+class ExampleHandler:
+    
+    def __init__(self,**args):
+        pass
+        
+    def __call__(self, response_object,raw_response_output,response_type,req_args,endpoint):
+        if response_type == "json":        
+            output = json.loads(raw_response_output)
+            
+            for item in output["data"]:
+                print_xml_stream(json.dumps(item))   
         else:
             print_xml_stream(raw_response_output)
 
@@ -224,7 +282,42 @@ class AutomaticEventHandler:
         else:
             print_xml_stream(raw_response_output)
             
+class AirTableEventHandler2:
+ 
+     def __init__(self,**args):
+         pass
+ 
+     def __call__(self, response_object,raw_response_output,response_type,req_args,endpoint):
+         if response_type == "json":
+             output = json.loads(raw_response_output)
+             
+             #first response
+             for record in output["records"]:
+                 print_xml_stream(json.dumps(record))
             
+             offset = output["offset"]   
+             #pagination loop    
+             while offset is not None:
+                 
+                 next_url = response_object.url+'?offset='+offset
+                 next_response = requests.get(next_url)
+                 output = json.loads(next_response.text)
+                 #print out results from pagination looping
+                 for record in output["records"]:
+                     print_xml_stream(json.dumps(record))
+                 #hopefully (guessing) at the end of the pagination , there will be
+                 #no more "offset" values in the JSON response , so this will cause the while
+                 #loop to exit   
+                 if "offset" in output:
+                     offset = output["offset"]
+                 else:
+                     offset = None 
+                 
+                 
+ 
+         else:
+             print_xml_stream(raw_response_output)
+                        
             
 class OpenstackTelemetryHandler:
 
@@ -280,7 +373,36 @@ class SmartTabHandler:
         date = datetime.strptime(date_str,'%Y-%m-%d')
         date += timedelta(days=1)
         return datetime.strftime(date,'%Y-%m-%d')
+
+class HPEResponseHandler:
+
+    def __init__(self,**args):
+        #self.date_format = args['date_format']
+        self.date_format = "%Y-%m-%dT%H:%M:%S.%f"
+        pass
+
+    def __call__(self, response_object,raw_response_output,response_type,req_args,endpoint):
+        from datetime import datetime
+        
+        if response_type == "json":
+            output = json.loads(raw_response_output)
+            new_watermark = None
+            #split out each event and keep track of latest update time for new watermark value
+            for event in output["event_list"]["event"]:
+                time_changed =  datetime.strptime(event["time_changed"][:23], self.date_format)
+                if new_watermark is None or time_changed > new_watermark:
+                    new_watermark = time_changed
+                print_xml_stream(json.dumps(event))
+                
+            if not "params" in req_args:
+                req_args["params"] = {}
             
+            #set watermark value for next request
+            req_args["params"]["watermark"] = datetime.strftime(new_watermark,self.date_format)
+            
+        else:
+            print_xml_stream(raw_response_output)
+                       
 class JSONArrayHandler:
 
     def __init__(self,**args):
@@ -311,6 +433,29 @@ class MyJSONArrayHandler:
         else:
             print_xml_stream(raw_response_output)
 
+class JoesResponseHandler:
+
+    def __init__(self,**args):
+        pass
+
+    def __call__(self, response_object,raw_response_output,response_type,req_args,endpoint):
+        if response_type == "json":
+            output = json.loads(raw_response_output)
+            last_id = 0
+            for entry in output['entries']:
+                print_xml_stream(json.dumps(entry))
+                if "EntryId" in entry:
+                    this_id = entry["EntryId"]
+                    if this_id > last_id:
+                        last_id = this_id
+            
+            if not "params" in req_args:
+                req_args["params"] = {}
+            
+            req_args["params"]["pageStart"] = last_id
+        else:
+            print_xml_stream(raw_response_output)
+            
 class YourJSONArrayHandler:
 
     def __init__(self,**args):

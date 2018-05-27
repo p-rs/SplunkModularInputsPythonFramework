@@ -2,7 +2,7 @@
 Pubnub Modular Input Script
 '''
 
-import sys,logging,os,time,re,threading
+import sys,logging,os,time,re,threading,hashlib
 import xml.dom.minidom
 from datetime import datetime
 
@@ -40,6 +40,12 @@ SCHEME = """<scheme>
             <arg name="name">
                 <title>Pubnub input name</title>
                 <description>Name of this Pubnub input</description>
+            </arg>
+            <arg name="activation_key">
+                <title>Activation Key</title>
+                <description>Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key</description>
+                <required_on_edit>true</required_on_edit>
+                <required_on_create>true</required_on_create>
             </arg>
             <arg name="key">
                 <title>Key</title>
@@ -86,6 +92,15 @@ def _error(message):
 def do_run(config):
     
     
+    activation_key = config.get("activation_key")
+    app_name = "Pubnub Modular Input"
+    
+    m = hashlib.md5()
+    m.update((app_name))
+    if not m.hexdigest().upper() == activation_key.upper():
+        logging.error("FATAL Activation key for App '%s' failed" % app_name)
+        sys.exit(2)
+        
     delimiter = ','
     
     #params

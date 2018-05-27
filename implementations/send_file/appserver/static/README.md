@@ -1,4 +1,4 @@
-## Scheduled Export of Indexed Data (SEND)  to File v0.5
+## Scheduled Export of Indexed Data (SEND)  to File v0.6
 
 ## Overview
 
@@ -9,6 +9,10 @@ The exported file is just a gzipped CSV of the search results that triggered the
 The real intent of this add-on though is as an example for developers to follow to show how you can essentially leverage the Modular Alerts framework to perform a scheduled data output.
 
 Other types of outputs to consider implementing : ftp,scp,jms,kafka,aws,rdbms,datawarehouse,some other data storage or processing platform etc...
+
+## Activation Key
+
+You require an activation key to use this App. Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key
 
 ## Note from the Modular Alerts engineer
 
@@ -41,5 +45,5 @@ Or you can search directly in Splunk : index=_internal sourcetype=splunkd compon
 
 ## Contact
 
-This project was initiated by Damien Dallimore , ddallimore@splunk.com
+This project was initiated by Damien Dallimore , damien@baboonbones.com
 

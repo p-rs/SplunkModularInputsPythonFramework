@@ -1,4 +1,4 @@
-# Splunk Tesla Modular Input v0.6
+# Splunk Tesla Modular Input v0.7
 
 ## Overview
 
@@ -17,6 +17,9 @@ The following unofficial API reference was utilised : http://docs.timdorr.apiary
 * Restart Splunk
 * Browse to Manager -> Data Inputs -> Tesla and setup your inputs
 
+## Activation Key
+
+You require an activation key to use this App. Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key
 
 ### Authentication
 
@@ -78,7 +81,7 @@ This project was initiated by Damien Dallimore
 
 <tr>
 <td><em>Email</em></td>
-<td>ddallimore@splunk.com</td>
+<td>damien@baboonbones.com</td>
 </tr>
 
 </table>

@@ -1,12 +1,4 @@
-'''
-Modular Input Script
-
-Copyright (C) 2012 Splunk, Inc.
-All Rights Reserved
-
-'''
-
-import sys,logging,os,time,subprocess,re
+import sys,logging,os,time,subprocess,re,hashlib
 import xml.dom.minidom, xml.sax.saxutils
 
 #set up logging
@@ -32,6 +24,12 @@ SCHEME = """<scheme>
             <arg name="name">
                 <title>Command Input Name</title>
                 <description>Name of this command input definition</description>
+            </arg>
+            <arg name="activation_key">
+                <title>Activation Key</title>
+                <description>Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key</description>
+                <required_on_edit>true</required_on_edit>
+                <required_on_create>true</required_on_create>
             </arg>
             <arg name="command_name">
                 <title>Command Name</title>
@@ -131,6 +129,16 @@ def which(program):
     
 def do_run():
     config = get_input_config()  
+    
+    activation_key = config.get("activation_key")
+    app_name = "Command Modular Input"
+    
+    m = hashlib.md5()
+    m.update((app_name))
+    if not m.hexdigest().upper() == activation_key.upper():
+        logging.error("FATAL Activation key for App '%s' failed" % app_name)
+        sys.exit(2)
+        
     
     command_name=config.get("command_name")
     command_args=config.get("command_args")

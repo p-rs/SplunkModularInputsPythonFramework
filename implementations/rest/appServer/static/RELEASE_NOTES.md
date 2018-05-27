@@ -1,3 +1,10 @@
+1.5
+-----
+Added an activation key requirement , visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key
+Added support for HEAD requests
+Docs updated
+Splunk 7.1 compatible
+
 1.4
 ----
 Delimiter fix

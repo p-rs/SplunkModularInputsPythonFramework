@@ -1,12 +1,4 @@
-'''
-Cisco Meraki Modular Input Script
-
-Copyright (C) 2012 Splunk, Inc.
-All Rights Reserved
-
-'''
-
-import sys,logging,json,signal
+import sys,logging,json,signal,hashlib
 import xml.dom.minidom, xml.sax.saxutils
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import SocketServer
@@ -35,7 +27,12 @@ SCHEME = """<scheme>
                 <title>Name of this Meraki input</title>
                 <description>Name of this Meraki input</description>
             </arg>
-                   
+            <arg name="activation_key">
+                <title>Activation Key</title>
+                <description>Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key</description>
+                <required_on_edit>true</required_on_edit>
+                <required_on_create>true</required_on_create>
+            </arg>     
             <arg name="http_port">
                 <title>HTTP Web Server Port</title>
                 <description>Port on which to listen for incoming HTTP requests</description>
@@ -87,7 +84,16 @@ def do_run():
     global meraki_secret
     global api_version
 
-    config = get_input_config()  
+    config = get_input_config() 
+    
+    activation_key = config.get("activation_key")
+    app_name = "Cisco Meraki Presence Modular Input"
+    
+    m = hashlib.md5()
+    m.update((app_name))
+    if not m.hexdigest().upper() == activation_key.upper():
+        logging.error("FATAL Activation key for App '%s' failed" % app_name)
+        sys.exit(2) 
     
     http_port=config.get("http_port",80)
     http_bind_address=config.get("http_bind_address",'')

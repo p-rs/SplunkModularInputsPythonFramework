@@ -1,10 +1,14 @@
-## SNMP Modular Input v1.2.7
+## SNMP Modular Input v1.3
 
-By Damien Dallimore and Scott Spencer
+By Damien Dallimore
 
 ## Overview
 
 This is a Splunk modular input add-on for polling SNMP attributes and catching traps.
+
+## Activation Key
+
+You require an activation key to use this App. Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key
 
 ## Features
 

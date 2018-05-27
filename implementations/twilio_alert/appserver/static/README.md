@@ -1,4 +1,4 @@
-## Splunk Twilio Modular Alert v0.5
+## Splunk Twilio Modular Alert v0.7
 
 ## Overview
 
@@ -13,6 +13,10 @@ This is a Splunk Modular Alert for sending SMS messages using Twilio.
 
 * Untar the release to your $SPLUNK_HOME/etc/apps directory
 * Restart Splunk
+
+## Activation Key
+
+You require an activation key to use this App. Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key
 
 ## Configuration
 
@@ -52,5 +56,5 @@ Or you can search directly in Splunk : index=_internal sourcetype=splunkd compon
 
 ## Contact
 
-This project was initiated by Damien Dallimore , ddallimore@splunk.com
+This project was initiated by Damien Dallimore , damien@baboonbones.com
 
