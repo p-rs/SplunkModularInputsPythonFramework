@@ -7,10 +7,10 @@
 1.2.7
 -----
 
-* Merged in community Pull requests.
-**  Add a new option to get subtree
-**  Add a new option to perform rDNS for trap source
-**  Fix to resolve missing server extractions on the SNMPv3 trap receiver
+* Merged in community Pull requests  
+Add a new option to get subtree  
+Add a new option to perform rDNS for trap source  
+Fix to resolve missing server extractions on the SNMPv3 trap receiver  
 
 
 1.2.6
