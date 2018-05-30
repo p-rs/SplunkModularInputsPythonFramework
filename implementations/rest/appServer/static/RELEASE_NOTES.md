@@ -1,6 +1,6 @@
 1.5.1
 -----
-Corrected a build bug with responsehandlers
+* Corrected a build bug with responsehandlers
 
 1.5
 -----
