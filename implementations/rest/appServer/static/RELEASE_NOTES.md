@@ -1,3 +1,7 @@
+1.5.1
+-----
+Corrected a build bug with responsehandlers
+
 1.5
 -----
 * Added an activation key requirement , visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key
