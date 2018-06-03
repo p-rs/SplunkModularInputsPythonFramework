@@ -9,7 +9,6 @@ class DefaultCommandOutputHandler:
     def __call__(self, raw_cmd_output):        
         print_xml_stream(raw_cmd_output)
           
-
 class GoGenHandler:
     
     def __init__(self,**args):
