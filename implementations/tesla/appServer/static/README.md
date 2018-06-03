@@ -1,4 +1,4 @@
-# Splunk Tesla Modular Input v0.7
+# Splunk Tesla Modular Input v0.8
 
 ## Overview
 

@@ -1,3 +1,7 @@
+1.5.2
+-----
+* minor manager xml ui tweak for 7.1
+
 1.5.1
 -----
 * Corrected a build bug with responsehandlers

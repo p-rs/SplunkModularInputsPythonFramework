@@ -518,7 +518,9 @@ def do_run(config,endpoint_list):
                         elif http_method == "POST":
                             r = oauth2.post(endpoint,**req_args) 
                         elif http_method == "PUT":
-                            r = oauth2.put(endpoint,**req_args)       
+                            r = oauth2.put(endpoint,**req_args)
+                        elif http_method == "HEAD":
+                            r = oauth2.head(endpoint,**req_args)       
                     else:
                         if http_method == "GET":
                             r = requests.get(endpoint,**req_args)
