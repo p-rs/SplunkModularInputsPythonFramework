@@ -1,5 +1,9 @@
 1.5.2
 -----
+* patched a bug to callbacks to Splunk for persisting state that required the activation key in the payload
+
+1.5.2
+-----
 * minor manager xml ui tweak for 7.1
 
 1.5.1

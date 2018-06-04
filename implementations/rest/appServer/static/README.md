@@ -1,4 +1,4 @@
-# Splunk REST API Modular Input v1.5.2
+# Splunk REST API Modular Input v1.5.3
 
 ## Overview
 
