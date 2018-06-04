@@ -307,7 +307,8 @@ def get_credentials(session_key):
 
 def do_run(config,endpoint_list):
     
-    global activation_key = config.get("activation_key")
+    global activation_key
+    activation_key = config.get("activation_key")
     app_name = "REST API Modular Input"
     
     m = hashlib.md5()
