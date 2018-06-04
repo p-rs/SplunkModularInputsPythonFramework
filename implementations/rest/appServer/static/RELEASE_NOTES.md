@@ -1,4 +1,4 @@
-1.5.2
+1.5.3
 -----
 * patched a bug to callbacks to Splunk for persisting state that required the activation key in the payload
 
