@@ -307,7 +307,7 @@ def get_credentials(session_key):
 
 def do_run(config,endpoint_list):
     
-    activation_key = config.get("activation_key")
+    global activation_key = config.get("activation_key")
     app_name = "REST API Modular Input"
     
     m = hashlib.md5()
@@ -609,7 +609,7 @@ def checkParamUpdated(cached,current,rest_name):
             args = {'host':'localhost','port':SPLUNK_PORT,'token':SESSION_TOKEN}
             service = Service(**args)   
             item = service.inputs.__getitem__(STANZA[7:])
-            item.update(**{rest_name:current})
+            item.update(**{rest_name:current,"activation_key":activation_key})
         except RuntimeError,e:
             logging.error("Looks like an error updating the modular input parameter %s: %s" % (rest_name,str(e),))   
         
@@ -627,7 +627,7 @@ def oauth2_token_updater(token):
         args = {'host':'localhost','port':SPLUNK_PORT,'token':SESSION_TOKEN}
         service = Service(**args)   
         item = service.inputs.__getitem__(STANZA[7:])
-        item.update(oauth2_access_token=token["access_token"],oauth2_refresh_token=token["refresh_token"])
+        item.update(oauth2_access_token=token["access_token"],oauth2_refresh_token=token["refresh_token"],activation_key=activation_key)
     except RuntimeError,e:
         logging.error("Looks like an error updating the oauth2 token: %s" % str(e))
 
