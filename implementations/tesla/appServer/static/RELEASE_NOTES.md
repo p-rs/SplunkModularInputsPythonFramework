@@ -1,3 +1,7 @@
+0.8.1
+-----
+* authentication key verification fix
+
 0.8
 -----
 * minor manager xml ui tweak for 7.1
