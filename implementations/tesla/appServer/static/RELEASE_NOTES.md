@@ -1,3 +1,7 @@
+0.8.2
+-----
+* polling interval defaults to 300 , just a docs update
+
 0.8.1
 -----
 * authentication key verification fix
