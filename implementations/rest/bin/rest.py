@@ -7,17 +7,6 @@ import threading
 import hashlib
 import xml.dom.minidom
 import tokens
-import requests
-import json
-from requests.auth import HTTPBasicAuth
-from requests.auth import HTTPDigestAuth
-from requests_oauthlib import OAuth1
-from requests_oauthlib import OAuth2Session
-from oauthlib.oauth2 import WebApplicationClient
-from requests.auth import AuthBase
-from splunklib.client import connect
-from splunklib.client import Service
-from croniter import croniter
 from datetime import datetime
 
 SPLUNK_HOME = os.environ.get("SPLUNK_HOME")
@@ -34,6 +23,18 @@ EGG_DIR = SPLUNK_HOME + "/etc/apps/rest_ta/bin/"
 for filename in os.listdir(EGG_DIR):
     if filename.endswith(".egg"):
         sys.path.append(EGG_DIR + filename)
+
+import requests
+import json
+from requests.auth import HTTPBasicAuth
+from requests.auth import HTTPDigestAuth
+from requests_oauthlib import OAuth1
+from requests_oauthlib import OAuth2Session
+from oauthlib.oauth2 import WebApplicationClient
+from requests.auth import AuthBase
+from splunklib.client import connect
+from splunklib.client import Service
+from croniter import croniter
 
 # set up logging
 logging.root
