@@ -55,15 +55,9 @@ This project was initiated by Damien Dallimore
 <table>
 
 <tr>
-<td><em>Email</em></td>
-<td>damien@baboonbones.com</td>
+<td><em>Repo</em></td>
+<td>https://github.com/damiendallimore/SplunkModularInputsPythonFramework</td>
 </tr>
-
-<tr>
-<td><em>Twitter</em>
-<td>@damiendallimore</td>
-</tr>
-
 
 </table>
 

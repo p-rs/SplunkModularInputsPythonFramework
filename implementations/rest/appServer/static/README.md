@@ -1,13 +1,8 @@
-# Splunk REST API Modular Input v1.5.3
+# Splunk REST API Modular Input v1.6
 
 ## Overview
 
 This is a Splunk modular input add-on for polling REST APIs.
-
-## Activation Key
-
-You require an activation key to use this App. Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key
-
 
 ## Features
 
